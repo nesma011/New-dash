@@ -36,7 +36,7 @@ function RoadmapPanel() {
   }, [])
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
       <SectionTitle>{roadmap?.title || "What's on the road?"}</SectionTitle>
 
       <div className="mt-5 flex items-center gap-4">
@@ -60,7 +60,7 @@ function RoadmapPanel() {
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && !roadmap ? (
-          <p className="text-sm text-slate-400">No roadmap data available.</p>
+          <p className="text-sm text-slate-400 dark:text-slate-500">No roadmap data available.</p>
         ) : null}
       </div>
     </section>

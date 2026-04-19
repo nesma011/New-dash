@@ -34,9 +34,9 @@ function ProjectsTable() {
   }, [])
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
       <SectionTitle>{projectSpendings?.title || 'Project Spendings'}</SectionTitle>
-      <div className="mt-5 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-4 pb-3 text-xs text-slate-400">
+      <div className="mt-5 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-4 pb-3 text-xs text-slate-400 dark:text-slate-500">
         <span>Manager</span>
         <span>Date</span>
         <span>Amount</span>
@@ -44,14 +44,12 @@ function ProjectsTable() {
       </div>
 
       {isLoading
-        ? Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index} isLoading />
-          ))
+        ? Array.from({ length: 5 }).map((_, index) => <TableRow key={index} isLoading />)
         : projectSpendings?.items?.map((item) => <TableRow key={item.id} item={item} />)}
 
       {!isLoading && error ? <p className="pt-4 text-sm text-rose-500">{error}</p> : null}
       {!isLoading && !error && !projectSpendings ? (
-        <p className="pt-4 text-sm text-slate-400">No spendings data available.</p>
+        <p className="pt-4 text-sm text-slate-400 dark:text-slate-500">No spendings data available.</p>
       ) : null}
     </section>
   )

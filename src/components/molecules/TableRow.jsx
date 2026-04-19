@@ -41,7 +41,7 @@ function getStatusColor(status) {
 function TableRow({ item, isLoading = false }) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm">
+      <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm dark:border-slate-700">
         <div className="flex items-center gap-3">
           <Avatar label="" />
           <TextLine width="w-24" />
@@ -61,20 +61,20 @@ function TableRow({ item, isLoading = false }) {
   }
 
   return (
-    <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm">
+    <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm dark:border-slate-700">
       <div className="flex items-center gap-3">
         <Avatar
           src={item.manager?.avatar}
           alt={item.manager?.name}
           label={item.manager?.name?.charAt(0) || 'U'}
         />
-        <p className="font-medium text-slate-900">{item.manager?.name}</p>
+        <p className="font-medium text-slate-900 dark:text-slate-100">{item.manager?.name}</p>
       </div>
-      <p className="text-slate-600">{formatDate(item.date)}</p>
-      <p className="text-slate-900">{formatCurrency(item.amount, item.currency)}</p>
+      <p className="text-slate-600 dark:text-slate-400">{formatDate(item.date)}</p>
+      <p className="text-slate-900 dark:text-slate-100">{formatCurrency(item.amount, item.currency)}</p>
       <div className="flex items-center gap-2">
         <span className={`h-2 w-2 rounded-full ${getStatusColor(item.status)}`} />
-        <p className="text-slate-500">{item.status}</p>
+        <p className="text-slate-500 dark:text-slate-400">{item.status}</p>
       </div>
     </div>
   )

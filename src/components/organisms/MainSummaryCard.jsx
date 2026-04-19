@@ -62,25 +62,25 @@ function MainSummaryCard() {
   }, [])
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
       <div className="flex items-start justify-between gap-4">
         <div>
           <SectionTitle>{summary?.projectName || 'Project Summary'}</SectionTitle>
 
           <div className="mt-5 grid gap-5 md:grid-cols-4">
             <div className="space-y-3">
-              <p className="text-sm text-slate-500">Status</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Status</p>
 
               {isLoading ? (
-                <div className="inline-flex items-center gap-2 rounded-lg bg-indigo-100 px-3 py-2">
-                  <TextLine width="w-24" className="bg-indigo-300" />
+                <div className="inline-flex items-center gap-2 rounded-lg bg-indigo-100 px-3 py-2 dark:bg-indigo-500/20">
+                  <TextLine width="w-24" className="bg-indigo-300 dark:bg-indigo-400/60" />
                 </div>
               ) : error || !hasSummary ? (
                 <p className="text-sm text-rose-500">
                   {error || 'No summary data available.'}
                 </p>
               ) : (
-                <div className="inline-flex items-center gap-2 rounded-lg bg-indigo-100 px-3 py-2 text-sm font-medium text-slate-900">
+                <div className="inline-flex items-center gap-2 rounded-lg bg-indigo-100 px-3 py-2 text-sm font-medium text-slate-900 dark:bg-indigo-500/20 dark:text-slate-100">
                   <span>{summary?.status?.label}</span>
                   <span>/</span>
                   <span>{summary?.status?.progress}%</span>
@@ -129,7 +129,7 @@ function MainSummaryCard() {
             ))}
 
             {summary?.extraMembers ? (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white bg-slate-200 text-[10px] text-slate-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white bg-slate-200 text-[10px] text-slate-600 dark:border-slate-800 dark:bg-slate-700 dark:text-slate-200">
                 +{summary.extraMembers}
               </div>
             ) : null}
