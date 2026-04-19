@@ -1,0 +1,11 @@
+function Breadcrumbs() {
+  return (
+    <div className="flex items-center gap-3 text-sm text-slate-400">
+      <span>Dashboards</span>
+      <span>/</span>
+      <span className="text-slate-900">Default</span>
+    </div>
+  )
+}
+
+export default Breadcrumbs
