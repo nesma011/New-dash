@@ -1,31 +1,12 @@
 import Button from '../atoms/Button'
-import PlaceholderBlock from '../atoms/PlaceholderBlock'
 import SectionTitle from '../atoms/SectionTitle'
 import FileRow from '../molecules/FileRow'
-import ListItem from '../molecules/ListItem'
+import RoadmapPanel from './RoadmapPanel'
 
 function OverviewPanels() {
   return (
     <div className="grid gap-5 xl:grid-cols-2">
-      <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-        <SectionTitle>What's on the road?</SectionTitle>
-        <div className="mt-5 flex items-center gap-4">
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl bg-slate-900" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-          <PlaceholderBlock className="h-14 w-12 rounded-2xl" />
-        </div>
-        <div className="mt-6 space-y-5">
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-        </div>
-      </section>
+      <RoadmapPanel />
 
       <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
         <SectionTitle>Latest Files</SectionTitle>
