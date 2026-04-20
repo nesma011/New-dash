@@ -36,9 +36,9 @@ function ActivitiesPanel() {
 
   return (
     <section>
-      <SectionTitle className="text-lg">Activities</SectionTitle>
+      <SectionTitle className="text-sm">Activities</SectionTitle>
 
-      <div className="mt-5 space-y-5">
+      <div className="mt-3 space-y-3.5">
         {isLoading
           ? Array.from({ length: 5 }).map((_, index) => (
               <div key={index} className="flex items-start gap-3">

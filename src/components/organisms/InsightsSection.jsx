@@ -4,7 +4,7 @@ import ProjectsTable from './ProjectsTable'
 
 function InsightsSection() {
   return (
-    <div className="space-y-5 p-6">
+    <div className="space-y-4 p-4">
       <MainSummaryCard />
       <OverviewPanels />
       <ProjectsTable />

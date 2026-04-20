@@ -36,9 +36,9 @@ function NotificationsPanel() {
 
   return (
     <section>
-      <SectionTitle className="text-lg">Notifications</SectionTitle>
+      <SectionTitle className="text-sm">Notifications</SectionTitle>
 
-      <div className="mt-5 space-y-5">
+      <div className="mt-3 space-y-3.5">
         {isLoading
           ? Array.from({ length: 4 }).map((_, index) => (
               <div key={index} className="flex items-start gap-3">

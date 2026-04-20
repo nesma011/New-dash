@@ -41,7 +41,7 @@ function getStatusColor(status) {
 function TableRow({ item, isLoading = false }) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm dark:border-slate-700">
+      <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-3 border-t border-slate-200 py-3 text-xs dark:border-slate-700">
         <div className="flex items-center gap-3">
           <Avatar label="" />
           <TextLine width="w-24" />
@@ -61,7 +61,7 @@ function TableRow({ item, isLoading = false }) {
   }
 
   return (
-    <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-4 border-t border-slate-200 py-4 text-sm dark:border-slate-700">
+    <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-3 border-t border-slate-200 py-3 text-xs dark:border-slate-700">
       <div className="flex items-center gap-3">
         <Avatar
           src={item.manager?.avatar}

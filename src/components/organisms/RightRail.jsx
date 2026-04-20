@@ -4,8 +4,8 @@ import NotificationsPanel from './NotificationsPanel'
 
 function RightRail() {
   return (
-    <aside className="border-l border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-      <div className="space-y-10">
+    <aside className="border-l border-slate-200 bg-white p-3 dark:border-[#3b3b3b] dark:bg-[#2b2b2b]">
+      <div className="space-y-6">
         <NotificationsPanel />
         <ActivitiesPanel />
         <ContactsPanel />

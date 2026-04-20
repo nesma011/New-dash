@@ -34,9 +34,9 @@ function ProjectsTable() {
   }, [])
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
+    <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{projectSpendings?.title || 'Project Spendings'}</SectionTitle>
-      <div className="mt-5 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-4 pb-3 text-xs text-slate-400 dark:text-slate-500">
+      <div className="mt-4 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-3 pb-2 text-[11px] text-slate-400 dark:text-slate-500">
         <span>Manager</span>
         <span>Date</span>
         <span>Amount</span>

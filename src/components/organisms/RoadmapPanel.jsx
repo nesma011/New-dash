@@ -36,10 +36,10 @@ function RoadmapPanel() {
   }, [])
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
+    <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{roadmap?.title || "What's on the road?"}</SectionTitle>
 
-      <div className="mt-5 flex items-center gap-4">
+      <div className="mt-4 flex items-center gap-2.5">
         {isLoading
           ? Array.from({ length: 7 }).map((_, index) => (
               <PlaceholderBlock key={index} className="h-14 w-12 rounded-2xl" />
@@ -49,7 +49,7 @@ function RoadmapPanel() {
             ))}
       </div>
 
-      <div className="mt-6 space-y-5">
+      <div className="mt-4 space-y-4">
         {isLoading
           ? Array.from({ length: 5 }).map((_, index) => (
               <PlaceholderBlock key={index} className="h-12 rounded-2xl" />

@@ -61,7 +61,7 @@ function LatestFilesPanel() {
   }
 
   return (
-    <section className="rounded-[28px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/70">
+    <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{latestFiles?.title || 'Latest Files'}</SectionTitle>
 
       <input
@@ -71,7 +71,7 @@ function LatestFilesPanel() {
         onChange={handleFileChange}
       />
 
-      <div className="mt-5 space-y-1">
+      <div className="mt-4 space-y-0.5">
         {isLoading
           ? Array.from({ length: 5 }).map((_, index) => <FileRow key={index} isLoading />)
           : (
@@ -87,7 +87,7 @@ function LatestFilesPanel() {
         ) : null}
       </div>
 
-      <div className="mt-5 rounded-2xl border border-slate-200 bg-white px-4 py-4 dark:border-slate-700 dark:bg-slate-900">
+      <div className="mt-4 rounded-xl border border-slate-200 bg-white px-3 py-3 dark:border-[#3f3f3f] dark:bg-[#2f2f2f]">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-sm text-slate-400 dark:text-slate-500">Drop files here or upload files</p>

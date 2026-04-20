@@ -25,13 +25,13 @@ function DashboardTemplate() {
   }, [isDarkMode])
 
   return (
-    <main className="min-h-screen bg-[#f3f4f8] p-2 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:p-4">
-      <div className="mx-auto max-w-[1400px]">
-        <section className="overflow-hidden rounded-[34px] border border-white bg-[#fcfcfd] shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_24px_80px_rgba(2,6,23,0.55)]">
-          <div className="grid min-h-[calc(100vh-2rem)] gap-0 xl:grid-cols-[240px_minmax(0,1fr)_270px]">
+    <main className="min-h-screen bg-[#f3f4f8] p-1.5 text-slate-900 dark:bg-[#252525] dark:text-[#f5f5f5] md:p-3">
+      <div className="mx-auto max-w-[1480px]">
+        <section className="overflow-hidden rounded-[28px] border border-white bg-[#fcfcfd] shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-[#3a3a3a] dark:bg-[#2b2b2b] dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
+          <div className="grid min-h-[calc(100vh-1.5rem)] gap-0 xl:grid-cols-[215px_minmax(0,1fr)_235px]">
             <Sidebar />
 
-            <section className="bg-white dark:bg-slate-900">
+            <section className="bg-white dark:bg-[#2b2b2b]">
               <DashboardHeader
                 isDarkMode={isDarkMode}
                 onToggleDarkMode={() => setIsDarkMode((current) => !current)}
