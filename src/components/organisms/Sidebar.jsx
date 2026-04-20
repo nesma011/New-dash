@@ -18,6 +18,23 @@ function ProfileBadge() {
   )
 }
 
+function CloseIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  )
+}
+
 function ChevronIcon() {
   return (
     <svg
@@ -235,12 +252,26 @@ function SidebarSubItem({ label }) {
   )
 }
 
-function Sidebar() {
+function Sidebar({ isOpen = false, onClose }) {
   return (
-    <aside className="border-r border-[#ececef] bg-white p-5 dark:border-[#3b3b3b] dark:bg-[#2b2b2b]">
-      <div className="flex items-center gap-3">
-        <ProfileBadge />
-        <p className="text-[15px] font-medium text-[#1f1f1f] dark:text-[#f4f4f4]">ByeWind</p>
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 w-[215px] overflow-y-auto border-r border-[#ececef] bg-white p-5 transition-transform duration-300 dark:border-[#3b3b3b] dark:bg-[#2b2b2b] lg:static lg:z-auto lg:w-auto lg:translate-x-0 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <ProfileBadge />
+          <p className="text-[15px] font-medium text-[#1f1f1f] dark:text-[#f4f4f4]">ByeWind</p>
+        </div>
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          onClick={onClose}
+          className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:bg-slate-50 dark:border-[#414141] dark:text-[#d0d0d0] dark:hover:bg-[#343434] lg:hidden"
+        >
+          <CloseIcon />
+        </button>
       </div>
 
       <div className="mt-8 flex gap-7 px-1 text-[13px]">

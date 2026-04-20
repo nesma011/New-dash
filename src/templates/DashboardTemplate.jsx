@@ -20,18 +20,39 @@ function DashboardTemplate() {
   const [isDarkMode, setIsDarkMode] = useState(getInitialTheme)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode)
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
+  useEffect(() => {
+    document.body.classList.toggle('overflow-hidden', isSidebarOpen)
+
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [isSidebarOpen])
+
   return (
     <main className="min-h-screen bg-[#f3f4f8] p-1.5 text-slate-900 dark:bg-[#252525] dark:text-[#f5f5f5] md:p-3">
       <div className="mx-auto max-w-[1480px]">
-        <section className="overflow-hidden rounded-[28px] border border-white bg-[#fcfcfd] shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-[#3a3a3a] dark:bg-[#2b2b2b] dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
+        <section className="relative overflow-hidden rounded-[28px] border border-white bg-[#fcfcfd] shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-[#3a3a3a] dark:bg-[#2b2b2b] dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
+          {isSidebarOpen ? (
+            <button
+              type="button"
+              aria-label="Close sidebar"
+              className="absolute inset-0 z-30 bg-slate-900/35 backdrop-blur-[1px] lg:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          ) : null}
+
           <div className="grid min-h-[calc(100vh-1.5rem)] gap-0 lg:grid-cols-[215px_minmax(0,1fr)] xl:grid-cols-[215px_minmax(0,1fr)_235px]">
-            <Sidebar />
+            <Sidebar
+              isOpen={isSidebarOpen}
+              onClose={() => setIsSidebarOpen(false)}
+            />
 
             <section className="min-w-0 bg-white dark:bg-[#2b2b2b]">
               <DashboardHeader
@@ -39,6 +60,7 @@ function DashboardTemplate() {
                 onToggleDarkMode={() => setIsDarkMode((current) => !current)}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
+                onOpenSidebar={() => setIsSidebarOpen(true)}
               />
               <ContentTabs
                 statusFilter={statusFilter}

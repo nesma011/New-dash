@@ -2,6 +2,14 @@ import IconBadge from '../atoms/IconBadge'
 import SearchField from '../atoms/SearchField'
 import Breadcrumbs from '../molecules/Breadcrumbs'
 
+function MenuIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  )
+}
+
 function SunIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -41,11 +49,24 @@ function LayoutIcon() {
   )
 }
 
-function DashboardHeader({ isDarkMode, onToggleDarkMode, searchQuery, onSearchChange }) {
+function DashboardHeader({
+  isDarkMode,
+  onToggleDarkMode,
+  searchQuery,
+  onSearchChange,
+  onOpenSidebar,
+}) {
   return (
     <header className="border-b border-slate-200 px-5 py-4 dark:border-[#3b3b3b]">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex items-center gap-3 text-slate-500 dark:text-[#a7a7a7]">
+          <IconBadge
+            aria-label="Open sidebar"
+            onClick={onOpenSidebar}
+            className="lg:hidden"
+          >
+            <MenuIcon />
+          </IconBadge>
           <IconBadge aria-label="Grid" className="bg-transparent dark:bg-transparent dark:border-transparent">[]</IconBadge>
           <IconBadge aria-label="Favorite" className="bg-transparent dark:bg-transparent dark:border-transparent">*</IconBadge>
           <Breadcrumbs />
