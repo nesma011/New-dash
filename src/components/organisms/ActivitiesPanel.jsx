@@ -4,7 +4,19 @@ import SectionTitle from '../atoms/SectionTitle'
 import TextLine from '../atoms/TextLine'
 import ActivityItem from '../molecules/ActivityItem'
 
-function ActivitiesPanel() {
+function matchesActivity(item, searchQuery) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [item.title, item.timeAgo, item.user?.name]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function ActivitiesPanel({ searchQuery = '' }) {
   const [activities, setActivities] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -34,6 +46,8 @@ function ActivitiesPanel() {
     return () => controller.abort()
   }, [])
 
+  const filteredActivities = activities.filter((item) => matchesActivity(item, searchQuery))
+
   return (
     <section>
       <SectionTitle className="text-sm">Activities</SectionTitle>
@@ -49,11 +63,14 @@ function ActivitiesPanel() {
                 </div>
               </div>
             ))
-          : activities.map((item) => <ActivityItem key={item.id} item={item} />)}
+          : filteredActivities.map((item) => <ActivityItem key={item.id} item={item} />)}
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && activities.length === 0 ? (
           <p className="text-sm text-slate-400">No activities available.</p>
+        ) : null}
+        {!isLoading && !error && activities.length > 0 && filteredActivities.length === 0 ? (
+          <p className="text-sm text-slate-400 dark:text-slate-500">No activities match the current keyword.</p>
         ) : null}
       </div>
     </section>

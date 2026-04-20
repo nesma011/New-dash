@@ -5,7 +5,19 @@ import SectionTitle from '../atoms/SectionTitle'
 import RoadmapActivityItem from '../molecules/RoadmapActivityItem'
 import RoadmapDateCard from '../molecules/RoadmapDateCard'
 
-function RoadmapPanel() {
+function matchesRoadmapItem(item, searchQuery) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [item.title, item.timeAgo, item.type, item.user?.name]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function RoadmapPanel({ searchQuery = '' }) {
   const [roadmap, setRoadmap] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -35,6 +47,8 @@ function RoadmapPanel() {
     return () => controller.abort()
   }, [])
 
+  const filteredItems = roadmap?.items?.filter((item) => matchesRoadmapItem(item, searchQuery)) ?? []
+
   return (
     <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{roadmap?.title || "What's on the road?"}</SectionTitle>
@@ -54,13 +68,16 @@ function RoadmapPanel() {
           ? Array.from({ length: 5 }).map((_, index) => (
               <PlaceholderBlock key={index} className="h-12 rounded-2xl" />
             ))
-          : roadmap?.items?.map((item) => (
+          : filteredItems.map((item) => (
               <RoadmapActivityItem key={item.id} item={item} />
             ))}
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && !roadmap ? (
           <p className="text-sm text-slate-400 dark:text-slate-500">No roadmap data available.</p>
+        ) : null}
+        {!isLoading && !error && roadmap && filteredItems.length === 0 ? (
+          <p className="text-sm text-slate-400 dark:text-slate-500">No roadmap items match the current keyword.</p>
         ) : null}
       </div>
     </section>

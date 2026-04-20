@@ -4,7 +4,19 @@ import Button from '../atoms/Button'
 import SectionTitle from '../atoms/SectionTitle'
 import FileRow from '../molecules/FileRow'
 
-function LatestFilesPanel() {
+function matchesFile(file, searchQuery) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [file.name, file.type, file.author, file.uploadedAt, file.size]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function LatestFilesPanel({ searchQuery = '' }) {
   const [latestFiles, setLatestFiles] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -60,6 +72,9 @@ function LatestFilesPanel() {
     event.target.value = ''
   }
 
+  const allFiles = [uploadedFile, ...(latestFiles?.items ?? [])].filter(Boolean)
+  const filteredFiles = allFiles.filter((file) => matchesFile(file, searchQuery))
+
   return (
     <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{latestFiles?.title || 'Latest Files'}</SectionTitle>
@@ -74,21 +89,19 @@ function LatestFilesPanel() {
       <div className="mt-4 space-y-0.5">
         {isLoading
           ? Array.from({ length: 5 }).map((_, index) => <FileRow key={index} isLoading />)
-          : (
-              <>
-                {uploadedFile ? <FileRow file={uploadedFile} /> : null}
-                {latestFiles?.items?.map((file) => <FileRow key={file.id} file={file} />)}
-              </>
-            )}
+          : filteredFiles.map((file) => <FileRow key={file.id} file={file} />)}
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && !latestFiles ? (
           <p className="text-sm text-slate-400 dark:text-slate-500">No files data available.</p>
         ) : null}
+        {!isLoading && !error && latestFiles && filteredFiles.length === 0 ? (
+          <p className="text-sm text-slate-400 dark:text-slate-500">No files match the current keyword.</p>
+        ) : null}
       </div>
 
       <div className="mt-4 rounded-xl border border-slate-200 bg-white px-3 py-3 dark:border-[#3f3f3f] dark:bg-[#2f2f2f]">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm text-slate-400 dark:text-slate-500">Drop files here or upload files</p>
             {uploadedFile ? (

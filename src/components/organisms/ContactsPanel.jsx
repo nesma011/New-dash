@@ -4,7 +4,19 @@ import SectionTitle from '../atoms/SectionTitle'
 import TextLine from '../atoms/TextLine'
 import ContactItem from '../molecules/ContactItem'
 
-function ContactsPanel() {
+function matchesContact(item, searchQuery) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [item.name, item.role]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function ContactsPanel({ searchQuery = '' }) {
   const [contacts, setContacts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -34,6 +46,8 @@ function ContactsPanel() {
     return () => controller.abort()
   }, [])
 
+  const filteredContacts = contacts.filter((item) => matchesContact(item, searchQuery))
+
   return (
     <section>
       <SectionTitle className="text-sm">Contacts</SectionTitle>
@@ -49,11 +63,14 @@ function ContactsPanel() {
                 </div>
               </div>
             ))
-          : contacts.map((item) => <ContactItem key={item.id} item={item} />)}
+          : filteredContacts.map((item) => <ContactItem key={item.id} item={item} />)}
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && contacts.length === 0 ? (
           <p className="text-sm text-slate-400">No contacts available.</p>
+        ) : null}
+        {!isLoading && !error && contacts.length > 0 && filteredContacts.length === 0 ? (
+          <p className="text-sm text-slate-400 dark:text-slate-500">No contacts match the current keyword.</p>
         ) : null}
       </div>
     </section>

@@ -4,7 +4,19 @@ import SectionTitle from '../atoms/SectionTitle'
 import TextLine from '../atoms/TextLine'
 import NotificationItem from '../molecules/NotificationItem'
 
-function NotificationsPanel() {
+function matchesNotification(item, searchQuery) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [item.title, item.timeAgo, item.type]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function NotificationsPanel({ searchQuery = '' }) {
   const [notifications, setNotifications] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -34,6 +46,8 @@ function NotificationsPanel() {
     return () => controller.abort()
   }, [])
 
+  const filteredNotifications = notifications.filter((item) => matchesNotification(item, searchQuery))
+
   return (
     <section>
       <SectionTitle className="text-sm">Notifications</SectionTitle>
@@ -49,11 +63,14 @@ function NotificationsPanel() {
                 </div>
               </div>
             ))
-          : notifications.map((item) => <NotificationItem key={item.id} item={item} />)}
+          : filteredNotifications.map((item) => <NotificationItem key={item.id} item={item} />)}
 
         {!isLoading && error ? <p className="text-sm text-rose-500">{error}</p> : null}
         {!isLoading && !error && notifications.length === 0 ? (
           <p className="text-sm text-slate-400">No notifications available.</p>
+        ) : null}
+        {!isLoading && !error && notifications.length > 0 && filteredNotifications.length === 0 ? (
+          <p className="text-sm text-slate-400 dark:text-slate-500">No notifications match the current keyword.</p>
         ) : null}
       </div>
     </section>

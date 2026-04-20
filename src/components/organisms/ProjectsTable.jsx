@@ -3,7 +3,24 @@ import { getProjectSpendings } from '../../apis/spendings'
 import SectionTitle from '../atoms/SectionTitle'
 import TableRow from '../molecules/TableRow'
 
-function ProjectsTable() {
+function matchesSpending(item, searchQuery, statusFilter) {
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+  const matchesStatus = statusFilter === 'all' || item.status === statusFilter
+
+  if (!matchesStatus) {
+    return false
+  }
+
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return [item.manager?.name, item.date, item.status, item.currency, String(item.amount)]
+    .filter(Boolean)
+    .some((value) => value.toLowerCase().includes(normalizedQuery))
+}
+
+function ProjectsTable({ searchQuery = '', statusFilter = 'all' }) {
   const [projectSpendings, setProjectSpendings] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -33,23 +50,33 @@ function ProjectsTable() {
     return () => controller.abort()
   }, [])
 
+  const filteredItems =
+    projectSpendings?.items?.filter((item) => matchesSpending(item, searchQuery, statusFilter)) ?? []
+
   return (
     <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-[#3d3d3d] dark:bg-[#343434]">
       <SectionTitle>{projectSpendings?.title || 'Project Spendings'}</SectionTitle>
-      <div className="mt-4 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-3 pb-2 text-[11px] text-slate-400 dark:text-slate-500">
-        <span>Manager</span>
-        <span>Date</span>
-        <span>Amount</span>
-        <span>Status</span>
-      </div>
+      <div className="mt-4 overflow-x-auto">
+        <div className="min-w-[620px]">
+          <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-3 pb-2 text-[11px] text-slate-400 dark:text-slate-500">
+            <span>Manager</span>
+            <span>Date</span>
+            <span>Amount</span>
+            <span>Status</span>
+          </div>
 
-      {isLoading
-        ? Array.from({ length: 5 }).map((_, index) => <TableRow key={index} isLoading />)
-        : projectSpendings?.items?.map((item) => <TableRow key={item.id} item={item} />)}
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, index) => <TableRow key={index} isLoading />)
+            : filteredItems.map((item) => <TableRow key={item.id} item={item} />)}
+        </div>
+      </div>
 
       {!isLoading && error ? <p className="pt-4 text-sm text-rose-500">{error}</p> : null}
       {!isLoading && !error && !projectSpendings ? (
         <p className="pt-4 text-sm text-slate-400 dark:text-slate-500">No spendings data available.</p>
+      ) : null}
+      {!isLoading && !error && projectSpendings && filteredItems.length === 0 ? (
+        <p className="pt-4 text-sm text-slate-400 dark:text-slate-500">No spendings match the current filters.</p>
       ) : null}
     </section>
   )

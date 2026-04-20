@@ -18,6 +18,8 @@ function getInitialTheme() {
 
 function DashboardTemplate() {
   const [isDarkMode, setIsDarkMode] = useState(getInitialTheme)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode)
@@ -28,20 +30,28 @@ function DashboardTemplate() {
     <main className="min-h-screen bg-[#f3f4f8] p-1.5 text-slate-900 dark:bg-[#252525] dark:text-[#f5f5f5] md:p-3">
       <div className="mx-auto max-w-[1480px]">
         <section className="overflow-hidden rounded-[28px] border border-white bg-[#fcfcfd] shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-[#3a3a3a] dark:bg-[#2b2b2b] dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
-          <div className="grid min-h-[calc(100vh-1.5rem)] gap-0 xl:grid-cols-[215px_minmax(0,1fr)_235px]">
+          <div className="grid min-h-[calc(100vh-1.5rem)] gap-0 lg:grid-cols-[215px_minmax(0,1fr)] xl:grid-cols-[215px_minmax(0,1fr)_235px]">
             <Sidebar />
 
-            <section className="bg-white dark:bg-[#2b2b2b]">
+            <section className="min-w-0 bg-white dark:bg-[#2b2b2b]">
               <DashboardHeader
                 isDarkMode={isDarkMode}
                 onToggleDarkMode={() => setIsDarkMode((current) => !current)}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
               />
-              <ContentTabs />
+              <ContentTabs
+                statusFilter={statusFilter}
+                onStatusFilterChange={setStatusFilter}
+              />
               <MetricsSection />
-              <InsightsSection />
+              <InsightsSection
+                searchQuery={searchQuery}
+                statusFilter={statusFilter}
+              />
             </section>
 
-            <RightRail />
+            <RightRail searchQuery={searchQuery} />
           </div>
         </section>
       </div>
