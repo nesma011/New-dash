@@ -28,6 +28,12 @@ npm run dev
 npm run build
 ```
 
+5. Run unit tests:
+
+```bash
+npm run test
+```
+
 ## Features
 
 - Atomic design structure with reusable `atoms`, `molecules`, and `organisms`
@@ -37,6 +43,7 @@ npm run build
 - API-based sections loaded from `src/apis/*`
 - Local upload interaction in the latest files panel
 - Light/dark mode toggle with persisted theme in `localStorage`
+- Unit tests for theme toggle, mobile sidebar drawer, spendings filters, and latest files behavior
 
 ## Project Structure
 
