@@ -13,7 +13,7 @@ npm install
 2. Create a `.env` file in the project root:
 
 ```env
-VITE_API_BASE_URL=https://dummyjson.com/c
+VITE_API_BASE_URL=api_url_here
 ```
 
 3. Start the development server:
